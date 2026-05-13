@@ -1,0 +1,10 @@
+Metric,Value
+Total Revenue,415.0
+Total Ad Spend,650.0
+ROAS,0.6384615384615384
+Failed Order Rate,0.4
+Pending Fulfillment,2
+
+Alerts
+High failed order rate detected
+Low ROAS detected

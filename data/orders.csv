@@ -1,0 +1,11 @@
+order_id,status,revenue,fulfillment_status
+1001,completed,120,fulfilled
+1002,completed,85,fulfilled
+1003,failed,0,pending
+1004,completed,210,fulfilled
+1005,failed,0,pending
+1006,completed,60,pending
+1007,completed,140,fulfilled
+1008,failed,0,pending
+1009,completed,95,fulfilled
+1010,completed,180,pending
