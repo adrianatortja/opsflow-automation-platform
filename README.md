@@ -1,76 +1,45 @@
 # OpsFlow Automation Platform
 
-OpsFlow is a Python automation project for ecommerce operations, ad performance tracking, alerts, and reporting.
+OpsFlow is a Python automation project for ecommerce operations, ad performance tracking, alerts, and reporting workflows.
 
-I built this project to practice the kind of work used in technical operations roles: reading data, processing it, finding issues, and generating reports automatically.
-
----
-
-## What It Does
-
-OpsFlow takes simple operations data and turns it into useful business information.
-
-Right now, it can:
-
-- read order data from CSV
-- read ad spend data from CSV
-- read fake Shopify-style JSON order data
-- normalize external data into one format
-- calculate business metrics
-- detect problems with simple alert rules
-- export a daily operations report to CSV
-
-The main flow is:
+It reads operations data, calculates key metrics, detects issues, and exports a daily report.
 
 ```text
 input → processing → decision → output
-```
-
-Example:
-
-```text
-orders + ad spend
-→ calculate revenue, ROAS, failed orders, pending fulfillment
-→ detect problems
-→ create a report
 ```
 
 ---
 
 ## Why I Built This
 
-I wanted to build a project that is closer to real operations work, not only CRUD APIs.
+I built OpsFlow to practice Python automation for technical operations work.
 
-In many ecommerce or performance marketing teams, people often repeat the same manual tasks:
+The project is based on common ecommerce operations tasks like:
 
-- checking spreadsheets
-- calculating numbers
-- looking for failed orders
-- checking if ad spend is performing
+- checking order data
+- reviewing ad spend
+- calculating ROAS
+- spotting failed orders
+- tracking fulfillment issues
 - preparing daily reports
 
-OpsFlow is a small version of that workflow, automated with Python.
+---
+
+## Features
+
+- Read order data from CSV
+- Read ad spend data from CSV
+- Read fake Shopify-style JSON order data
+- Normalize external data into one internal format
+- Calculate business metrics
+- Detect operational issues
+- Export a daily CSV report
 
 ---
 
-## Current Features
+## Metrics
 
-- CSV data ingestion
-- JSON data ingestion
-- Shopify-style data normalization
-- revenue calculation
-- ad spend calculation
-- ROAS calculation
-- failed order rate calculation
-- pending fulfillment count
-- alert detection
-- CSV report export
-
----
-
-## Metrics Calculated
-
-OpsFlow currently calculates:
+OpsFlow calculates:
 
 - total revenue
 - total ad spend
@@ -98,17 +67,14 @@ opsflow-automation-platform/
 │   ├── orders.csv
 │   ├── ads.csv
 │   └── fake_shopify_orders.json
-│
 ├── reports/
 │   └── daily_ops_report.csv
-│
 ├── opsflow/
 │   ├── __init__.py
 │   ├── ingestion.py
 │   ├── metrics.py
 │   ├── alerts.py
 │   └── reporting.py
-│
 ├── main.py
 ├── README.md
 └── requirements.txt
@@ -116,37 +82,38 @@ opsflow-automation-platform/
 
 ---
 
-## How The Files Work
+## How To Run
 
-### `main.py`
+Clone the repository:
 
-Runs the full workflow.
+```bash
+git clone https://github.com/adrianatortja/opsflow-automation-platform.git
+cd opsflow-automation-platform
+```
 
-It reads the data, calculates metrics, generates alerts, and creates the report.
+Create a virtual environment:
 
-### `ingestion.py`
+```bash
+python -m venv venv
+```
 
-Handles input data.
+Activate it on Windows:
 
-It reads CSV files, reads JSON files, and converts Shopify-style data into the format the rest of the project expects.
+```bash
+venv\Scripts\activate
+```
 
-### `metrics.py`
+Run the project:
 
-Handles the calculations.
+```bash
+python main.py
+```
 
-This is where revenue, ad spend, ROAS, failed order rate, and pending fulfillment are calculated.
+The report will be created here:
 
-### `alerts.py`
-
-Handles the decision logic.
-
-It checks the metrics and decides if something needs attention.
-
-### `reporting.py`
-
-Handles the output.
-
-It creates the daily CSV report.
+```text
+reports/daily_ops_report.csv
+```
 
 ---
 
@@ -171,85 +138,25 @@ Alerts:
 
 ---
 
-## How To Run It
+## Skills Practiced
 
-Clone the repository:
-
-```bash
-git clone https://github.com/adrianatortja/opsflow-automation-platform.git
-cd opsflow-automation-platform
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Activate it on Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-Install requirements:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run the project:
-
-```bash
-python main.py
-```
-
-The report will be created here:
-
-```text
-reports/daily_ops_report.csv
-```
-
----
-
-## Design Notes
-
-I separated the project into small files because each part has a different job.
-
-For example:
-
-- `ingestion.py` only cares about where the data comes from
-- `metrics.py` only cares about calculations
-- `alerts.py` only cares about detecting problems
-- `reporting.py` only cares about creating output
-
-This makes the project easier to change later.
-
-For example, I started with CSV files, then added fake Shopify JSON data without changing the metrics or alerts logic.
-
-That is the main idea of this project: the input source can change, but the business logic can stay reusable.
-
----
-
-## Tech Used
-
-- Python
-- CSV
-- JSON
-- Git
-- GitHub
+- Python scripting
+- CSV processing
+- JSON processing
+- data normalization
+- business metric calculation
+- alert logic
+- report generation
+- modular project structure
+- Git and GitHub
 
 ---
 
 ## Future Improvements
 
-Things I want to add later:
-
 - fake Meta Ads API data
 - supplier or warehouse data
-- better report formatting
 - email alerts
-- webhook alerts
 - scheduled automation
 - Google Sheets export
 - Streamlit dashboard
