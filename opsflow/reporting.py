@@ -1,7 +1,15 @@
 import csv
 
 
-def export_daily_report(metrics, alerts, meta_ads_metrics, meta_ads_alerts, output_file):
+def export_daily_report(
+    metrics,
+    alerts,
+    meta_ads_metrics,
+    meta_ads_alerts,
+    supplier_metrics,
+    supplier_alerts,
+    output_file
+):
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
 
@@ -24,6 +32,14 @@ def export_daily_report(metrics, alerts, meta_ads_metrics, meta_ads_alerts, outp
 
         writer.writerow([])
 
+        writer.writerow(["Supplier", "Total Supplier Orders", supplier_metrics["total_supplier_orders"]])
+        writer.writerow(["Supplier", "Total Delayed Orders", supplier_metrics["total_delayed_orders"]])
+        writer.writerow(["Supplier", "Total Pending Supplier Orders", supplier_metrics["total_pending_supplier_orders"]])
+        writer.writerow(["Supplier", "Supplier Delay Rate", supplier_metrics["supplier_delay_rate"]])
+        writer.writerow(["Supplier", "Average Supplier Delay Days", supplier_metrics["average_supplier_delay_days"]])
+
+        writer.writerow([])
+
         writer.writerow(["Section", "Alert"])
 
         for alert in alerts:
@@ -31,3 +47,6 @@ def export_daily_report(metrics, alerts, meta_ads_metrics, meta_ads_alerts, outp
 
         for alert in meta_ads_alerts:
             writer.writerow(["Meta Ads", alert])
+
+        for alert in supplier_alerts:
+            writer.writerow(["Supplier", alert])

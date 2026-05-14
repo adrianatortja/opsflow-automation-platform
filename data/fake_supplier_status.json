@@ -1,0 +1,26 @@
+[
+  {
+    "supplier_id": "sup_001",
+    "supplier_name": "NorthStar Fulfillment",
+    "total_orders": 120,
+    "orders_delayed": 18,
+    "orders_pending": 25,
+    "average_delay_days": 3.5
+  },
+  {
+    "supplier_id": "sup_002",
+    "supplier_name": "FastShip Logistics",
+    "total_orders": 95,
+    "orders_delayed": 5,
+    "orders_pending": 8,
+    "average_delay_days": 1.2
+  },
+  {
+    "supplier_id": "sup_003",
+    "supplier_name": "UrbanPack Supply",
+    "total_orders": 60,
+    "orders_delayed": 14,
+    "orders_pending": 20,
+    "average_delay_days": 4.1
+  }
+]

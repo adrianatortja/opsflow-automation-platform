@@ -46,3 +46,40 @@ def calculate_meta_ads_metrics(meta_ads_data):
         "total_conversions": total_conversions,
         "conversion_rate": conversion_rate,
     }
+ 
+    
+def calculate_supplier_metrics(supplier_status_data):
+    """
+    Calculate supplier health metrics from fake supplier API data.
+    """
+    total_supplier_orders = 0
+    total_delayed_orders = 0
+    total_pending_orders = 0
+    total_delay_days = 0
+    supplier_count = len(supplier_status_data)
+
+    for supplier in supplier_status_data:
+        total_supplier_orders += int(supplier["total_orders"])
+        total_delayed_orders += int(supplier["orders_delayed"])
+        total_pending_orders += int(supplier["orders_pending"])
+        total_delay_days += float(supplier["average_delay_days"])
+
+    supplier_delay_rate = (
+        total_delayed_orders / total_supplier_orders
+        if total_supplier_orders > 0
+        else 0
+    )
+
+    average_supplier_delay_days = (
+        total_delay_days / supplier_count
+        if supplier_count > 0
+        else 0
+    )
+
+    return {
+        "total_supplier_orders": total_supplier_orders,
+        "total_delayed_orders": total_delayed_orders,
+        "total_pending_supplier_orders": total_pending_orders,
+        "supplier_delay_rate": supplier_delay_rate,
+        "average_supplier_delay_days": average_supplier_delay_days,
+    }

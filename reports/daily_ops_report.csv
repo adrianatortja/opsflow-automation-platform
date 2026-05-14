@@ -12,7 +12,15 @@ Meta Ads,Total Clicks,2950
 Meta Ads,Total Conversions,50
 Meta Ads,Conversion Rate,0.01694915254237288
 
+Supplier,Total Supplier Orders,275
+Supplier,Total Delayed Orders,37
+Supplier,Total Pending Supplier Orders,53
+Supplier,Supplier Delay Rate,0.13454545454545455
+Supplier,Average Supplier Delay Days,2.9333333333333336
+
 Section,Alert
 Operations,High failed order rate detected
 Operations,Low ROAS detected
 Meta Ads,Meta Ads conversion rate is too low
+Supplier,Supplier delay rate is high
+Supplier,Supplier backlog detected

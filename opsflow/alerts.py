@@ -28,3 +28,20 @@ def generate_meta_ads_alerts(meta_ads_metrics):
         alerts.append("Meta Ads spend is unusually high")
 
     return alerts
+
+def generate_supplier_alerts(supplier_metrics):
+    """
+    Generate alerts based on supplier health metrics.
+    """
+    alerts = []
+
+    if supplier_metrics["supplier_delay_rate"] > 0.10:
+        alerts.append("Supplier delay rate is high")
+
+    if supplier_metrics["total_pending_supplier_orders"] > 40:
+        alerts.append("Supplier backlog detected")
+
+    if supplier_metrics["average_supplier_delay_days"] > 3:
+        alerts.append("Average supplier delay is too high")
+
+    return alerts

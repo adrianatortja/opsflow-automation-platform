@@ -50,3 +50,19 @@ def fetch_meta_ads_data(file_path):
     except FileNotFoundError:
         print(f"Error: Meta Ads data file not found: {file_path}")
         return []
+
+def fetch_supplier_status_data(file_path):
+    """
+    Simulate fetching supplier status data from an API.
+
+    In a real technical operations workflow, this could come from
+    a supplier portal, warehouse system, fulfillment API, or ERP system.
+
+    For now, we read from a local JSON file so we can practice
+    the same API-style integration pattern safely.
+    """
+    try:
+        return read_json_file(file_path)
+    except FileNotFoundError:
+        print(f"Error: Supplier status data file not found: {file_path}")
+        return []
