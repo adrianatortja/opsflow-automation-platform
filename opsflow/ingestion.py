@@ -34,3 +34,12 @@ def normalize_shopify_orders(shopify_orders):
         })
 
     return normalized_orders
+
+def read_fake_meta_ads_data(file_path):
+    """
+    Read fake Meta Ads API data from a JSON file.
+
+    In a real project, this data would come from an API request.
+    For now, we use a local JSON file to simulate an API response.
+    """
+    return read_json_file(file_path)

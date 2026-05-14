@@ -1,0 +1,26 @@
+[
+  {
+    "campaign_id": "cmp_001",
+    "campaign_name": "Spring Sale Campaign",
+    "spend": 250.00,
+    "clicks": 1200,
+    "conversions": 25,
+    "revenue": 500.00
+  },
+  {
+    "campaign_id": "cmp_002",
+    "campaign_name": "Retargeting Campaign",
+    "spend": 180.00,
+    "clicks": 800,
+    "conversions": 18,
+    "revenue": 420.00
+  },
+  {
+    "campaign_id": "cmp_003",
+    "campaign_name": "Cold Audience Campaign",
+    "spend": 220.00,
+    "clicks": 950,
+    "conversions": 7,
+    "revenue": 160.00
+  }
+]
