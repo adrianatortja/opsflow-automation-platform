@@ -35,11 +35,18 @@ def normalize_shopify_orders(shopify_orders):
 
     return normalized_orders
 
-def read_fake_meta_ads_data(file_path):
+def fetch_meta_ads_data(file_path):
     """
-    Read fake Meta Ads API data from a JSON file.
+    Simulate fetching Meta Ads data from an API.
 
-    In a real project, this data would come from an API request.
-    For now, we use a local JSON file to simulate an API response.
+    In a real integration, this function would send an HTTP request
+    to the Meta Ads API and receive JSON data back.
+
+    For now, we read from a local JSON file so we can practice
+    the same integration pattern safely.
     """
-    return read_json_file(file_path)
+    try:
+        return read_json_file(file_path)
+    except FileNotFoundError:
+        print(f"Error: Meta Ads data file not found: {file_path}")
+        return []
