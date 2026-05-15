@@ -36,7 +36,6 @@ alerts = generate_alerts(metrics)
 meta_ads_alerts = generate_meta_ads_alerts(meta_ads_metrics)
 supplier_alerts = generate_supplier_alerts(supplier_metrics)
 
-print("DEBUG: notification code reached")
 
 alert_message = build_alert_message(alerts, meta_ads_alerts, supplier_alerts)
 send_slack_style_notification(alert_message)
