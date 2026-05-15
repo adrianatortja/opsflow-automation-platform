@@ -1,22 +1,22 @@
 Section,Metric,Value
-Operations,Total Revenue,415.0
-Operations,Total Ad Spend,650.0
-Operations,ROAS,0.6384615384615384
-Operations,Failed Order Rate,0.4
+Operations,Total Revenue,$415.00
+Operations,Total Ad Spend,$650.00
+Operations,ROAS,0.64
+Operations,Failed Order Rate,40.00%
 Operations,Pending Fulfillment,2
 
-Meta Ads,Total Meta Spend,650.0
-Meta Ads,Total Meta Revenue,1080.0
-Meta Ads,Meta ROAS,1.6615384615384616
+Meta Ads,Total Meta Spend,$650.00
+Meta Ads,Total Meta Revenue,$1080.00
+Meta Ads,Meta ROAS,1.66
 Meta Ads,Total Clicks,2950
 Meta Ads,Total Conversions,50
-Meta Ads,Conversion Rate,0.01694915254237288
+Meta Ads,Conversion Rate,1.69%
 
 Supplier,Total Supplier Orders,275
 Supplier,Total Delayed Orders,37
 Supplier,Total Pending Supplier Orders,53
-Supplier,Supplier Delay Rate,0.13454545454545455
-Supplier,Average Supplier Delay Days,2.9333333333333336
+Supplier,Supplier Delay Rate,13.45%
+Supplier,Average Supplier Delay Days,2.93 days
 
 Section,Alert
 Operations,High failed order rate detected
