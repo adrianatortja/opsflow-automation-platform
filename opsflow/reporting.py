@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 
 def format_currency(value):
@@ -58,6 +59,10 @@ def export_daily_report(
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
 
+        generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        writer.writerow(["Report Generated At", generated_at])
+        writer.writerow([])
         writer.writerow(["Section", "Metric", "Value"])
 
         write_metric_row(writer, "Operations", "Total Revenue", metrics["total_revenue"])
@@ -95,3 +100,4 @@ def export_daily_report(
 
         for alert in supplier_alerts:
             writer.writerow(["Supplier", alert])
+            
