@@ -40,8 +40,29 @@ def get_recommended_action(alert):
     return "Review this alert and investigate the related workflow."
 
 
+def count_alerts_by_severity(alerts, meta_ads_alerts, supplier_alerts):
+    severity_counts = {
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0,
+    }
+
+    all_alerts = alerts + meta_ads_alerts + supplier_alerts
+
+    for alert in all_alerts:
+        severity = get_alert_severity(alert)
+        severity_counts[severity] += 1
+
+    return severity_counts
+
+
 def build_alert_message(alerts, meta_ads_alerts, supplier_alerts):
     total_alerts = len(alerts) + len(meta_ads_alerts) + len(supplier_alerts)
+    severity_counts = count_alerts_by_severity(
+        alerts,
+        meta_ads_alerts,
+        supplier_alerts,
+    )
 
     if total_alerts == 0:
         return "✅ OpsFlow Alert\n\nAll systems healthy. No alerts detected."
@@ -50,6 +71,9 @@ def build_alert_message(alerts, meta_ads_alerts, supplier_alerts):
         "🚨 OpsFlow Alert",
         "",
         f"Total Alerts: {total_alerts}",
+        f"High Severity: {severity_counts['HIGH']}",
+        f"Medium Severity: {severity_counts['MEDIUM']}",
+        f"Low Severity: {severity_counts['LOW']}",
         "",
     ]
 
