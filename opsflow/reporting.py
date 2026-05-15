@@ -47,6 +47,11 @@ def write_metric_row(writer, section, metric_name, value):
     writer.writerow([section, metric_name, formatted_value])
 
 
+def write_section_header(writer, title):
+    writer.writerow([])
+    writer.writerow([f"=== {title.upper()} ==="])
+
+
 def get_health_status(alert_list):
     if len(alert_list) > 0:
         return "Needs Attention"
@@ -87,8 +92,8 @@ def export_daily_report(
         writer.writerow(["Operations Health", operations_health])
         writer.writerow(["Meta Ads Health", meta_ads_health])
         writer.writerow(["Supplier Health", supplier_health])
-        writer.writerow([])
 
+        write_section_header(writer, "Operations Metrics")
         writer.writerow(["Section", "Metric", "Value"])
 
         write_metric_row(writer, "Operations", "Total Revenue", metrics["total_revenue"])
@@ -97,7 +102,8 @@ def export_daily_report(
         write_metric_row(writer, "Operations", "Failed Order Rate", metrics["failed_order_rate"])
         write_metric_row(writer, "Operations", "Pending Fulfillment", metrics["pending_fulfillment"])
 
-        writer.writerow([])
+        write_section_header(writer, "Meta Ads Metrics")
+        writer.writerow(["Section", "Metric", "Value"])
 
         write_metric_row(writer, "Meta Ads", "Total Meta Spend", meta_ads_metrics["total_meta_spend"])
         write_metric_row(writer, "Meta Ads", "Total Meta Revenue", meta_ads_metrics["total_meta_revenue"])
@@ -106,7 +112,8 @@ def export_daily_report(
         write_metric_row(writer, "Meta Ads", "Total Conversions", meta_ads_metrics["total_conversions"])
         write_metric_row(writer, "Meta Ads", "Conversion Rate", meta_ads_metrics["conversion_rate"])
 
-        writer.writerow([])
+        write_section_header(writer, "Supplier Metrics")
+        writer.writerow(["Section", "Metric", "Value"])
 
         write_metric_row(writer, "Supplier", "Total Supplier Orders", supplier_metrics["total_supplier_orders"])
         write_metric_row(writer, "Supplier", "Total Delayed Orders", supplier_metrics["total_delayed_orders"])
@@ -114,8 +121,7 @@ def export_daily_report(
         write_metric_row(writer, "Supplier", "Supplier Delay Rate", supplier_metrics["supplier_delay_rate"])
         write_metric_row(writer, "Supplier", "Average Supplier Delay Days", supplier_metrics["average_supplier_delay_days"])
 
-        writer.writerow([])
-
+        write_section_header(writer, "Alerts")
         writer.writerow(["Section", "Alert"])
 
         for alert in alerts:

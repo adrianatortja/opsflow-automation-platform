@@ -1,4 +1,4 @@
-Report Generated At,2026-05-15 12:42
+Report Generated At,2026-05-15 12:49
 
 Daily Summary
 Total Alerts,5
@@ -7,6 +7,7 @@ Operations Health,Needs Attention
 Meta Ads Health,Needs Attention
 Supplier Health,Needs Attention
 
+=== OPERATIONS METRICS ===
 Section,Metric,Value
 Operations,Total Revenue,$415.00
 Operations,Total Ad Spend,$650.00
@@ -14,6 +15,8 @@ Operations,ROAS,0.64
 Operations,Failed Order Rate,40.00%
 Operations,Pending Fulfillment,2
 
+=== META ADS METRICS ===
+Section,Metric,Value
 Meta Ads,Total Meta Spend,$650.00
 Meta Ads,Total Meta Revenue,$1080.00
 Meta Ads,Meta ROAS,1.66
@@ -21,12 +24,15 @@ Meta Ads,Total Clicks,2950
 Meta Ads,Total Conversions,50
 Meta Ads,Conversion Rate,1.69%
 
+=== SUPPLIER METRICS ===
+Section,Metric,Value
 Supplier,Total Supplier Orders,275
 Supplier,Total Delayed Orders,37
 Supplier,Total Pending Supplier Orders,53
 Supplier,Supplier Delay Rate,13.45%
 Supplier,Average Supplier Delay Days,2.93 days
 
+=== ALERTS ===
 Section,Alert
 Operations,High failed order rate detected
 Operations,Low ROAS detected
