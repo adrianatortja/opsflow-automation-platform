@@ -47,6 +47,13 @@ def write_metric_row(writer, section, metric_name, value):
     writer.writerow([section, metric_name, formatted_value])
 
 
+def get_health_status(alert_list):
+    if len(alert_list) > 0:
+        return "Needs Attention"
+
+    return "Healthy"
+
+
 def export_daily_report(
     metrics,
     alerts,
@@ -61,8 +68,27 @@ def export_daily_report(
 
         generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
 
+        total_alerts = len(alerts) + len(meta_ads_alerts) + len(supplier_alerts)
+        operations_health = get_health_status(alerts)
+        meta_ads_health = get_health_status(meta_ads_alerts)
+        supplier_health = get_health_status(supplier_alerts)
+
+        if total_alerts > 0:
+            overall_health = "Needs Attention"
+        else:
+            overall_health = "Healthy"
+
         writer.writerow(["Report Generated At", generated_at])
         writer.writerow([])
+
+        writer.writerow(["Daily Summary"])
+        writer.writerow(["Total Alerts", total_alerts])
+        writer.writerow(["Overall Health", overall_health])
+        writer.writerow(["Operations Health", operations_health])
+        writer.writerow(["Meta Ads Health", meta_ads_health])
+        writer.writerow(["Supplier Health", supplier_health])
+        writer.writerow([])
+
         writer.writerow(["Section", "Metric", "Value"])
 
         write_metric_row(writer, "Operations", "Total Revenue", metrics["total_revenue"])
@@ -100,4 +126,3 @@ def export_daily_report(
 
         for alert in supplier_alerts:
             writer.writerow(["Supplier", alert])
-            
