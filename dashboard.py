@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 
 from opsflow.pipeline import get_opsflow_dashboard_data
@@ -27,6 +28,19 @@ st.write(
     "supplier health, and operational alerts."
 )
 
+st.sidebar.title("OpsFlow Summary")
+st.sidebar.metric("Total Alerts", total_alerts)
+st.sidebar.metric("ROAS", f"{metrics['roas']:.2f}")
+st.sidebar.metric("Failed Order Rate", f"{metrics['failed_order_rate']:.1%}")
+st.sidebar.metric("Supplier Delay Rate", f"{supplier_metrics['supplier_delay_rate']:.1%}")
+
+if total_alerts > 0:
+    st.sidebar.warning("Action needed today")
+else:
+    st.sidebar.success("Operations look healthy")
+
+st.divider()
+
 st.subheader("Operations KPIs")
 
 col1, col2, col3, col4, col5 = st.columns(5)
@@ -36,6 +50,25 @@ col2.metric("Total Ad Spend", f"${metrics['total_ad_spend']:.2f}")
 col3.metric("ROAS", f"{metrics['roas']:.2f}")
 col4.metric("Failed Order Rate", f"{metrics['failed_order_rate']:.1%}")
 col5.metric("Pending Fulfillment", metrics["pending_fulfillment"])
+
+operations_chart_data = pd.DataFrame(
+    {
+        "Metric": ["Revenue", "Ad Spend", "Pending Fulfillment"],
+        "Value": [
+            metrics["total_revenue"],
+            metrics["total_ad_spend"],
+            metrics["pending_fulfillment"],
+        ],
+    }
+)
+
+st.bar_chart(
+    operations_chart_data,
+    x="Metric",
+    y="Value",
+)
+
+st.divider()
 
 st.subheader("Alert Summary")
 
@@ -66,6 +99,8 @@ else:
         for alert in supplier_alerts:
             st.warning(alert)
 
+st.divider()
+
 st.subheader("Meta Ads Performance")
 
 meta_col1, meta_col2, meta_col3, meta_col4 = st.columns(4)
@@ -74,6 +109,24 @@ meta_col1.metric("Meta Spend", f"${meta_ads_metrics['total_meta_spend']:.2f}")
 meta_col2.metric("Meta Revenue", f"${meta_ads_metrics['total_meta_revenue']:.2f}")
 meta_col3.metric("Meta ROAS", f"{meta_ads_metrics['meta_roas']:.2f}")
 meta_col4.metric("Conversion Rate", f"{meta_ads_metrics['conversion_rate']:.1%}")
+
+meta_chart_data = pd.DataFrame(
+    {
+        "Metric": ["Meta Spend", "Meta Revenue"],
+        "Value": [
+            meta_ads_metrics["total_meta_spend"],
+            meta_ads_metrics["total_meta_revenue"],
+        ],
+    }
+)
+
+st.bar_chart(
+    meta_chart_data,
+    x="Metric",
+    y="Value",
+)
+
+st.divider()
 
 st.subheader("Supplier Health")
 
@@ -95,4 +148,21 @@ supplier_col5, supplier_col6 = st.columns(2)
 supplier_col5.metric(
     "Average Supplier Delay Days",
     f"{supplier_metrics['average_supplier_delay_days']:.1f}",
+)
+
+supplier_chart_data = pd.DataFrame(
+    {
+        "Metric": ["Supplier Orders", "Delayed Orders", "Pending Orders"],
+        "Value": [
+            supplier_metrics["total_supplier_orders"],
+            supplier_metrics["total_delayed_orders"],
+            supplier_metrics["total_pending_supplier_orders"],
+        ],
+    }
+)
+
+st.bar_chart(
+    supplier_chart_data,
+    x="Metric",
+    y="Value",
 )
