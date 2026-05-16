@@ -4,7 +4,25 @@ import time
 from datetime import datetime
 
 
-RUN_INTERVAL_SECONDS = 60
+DEFAULT_RUN_INTERVAL_SECONDS = 60
+
+
+def get_run_interval():
+    if len(sys.argv) < 2:
+        return DEFAULT_RUN_INTERVAL_SECONDS
+
+    try:
+        interval = int(sys.argv[1])
+
+        if interval <= 0:
+            print("Interval must be greater than 0. Using default interval.")
+            return DEFAULT_RUN_INTERVAL_SECONDS
+
+        return interval
+
+    except ValueError:
+        print("Invalid interval value. Using default interval.")
+        return DEFAULT_RUN_INTERVAL_SECONDS
 
 
 def run_opsflow_pipeline():
@@ -21,21 +39,22 @@ def run_opsflow_pipeline():
         print(f"Error code: {error.returncode}")
 
 
-def start_scheduler():
+def start_scheduler(run_interval_seconds):
     print("OpsFlow scheduler started.")
-    print(f"The workflow will run every {RUN_INTERVAL_SECONDS} seconds.")
+    print(f"The workflow will run every {run_interval_seconds} seconds.")
     print("Press CTRL + C to stop the scheduler.\n")
 
     try:
         while True:
             run_opsflow_pipeline()
 
-            print(f"\nNext run in {RUN_INTERVAL_SECONDS} seconds...")
-            time.sleep(RUN_INTERVAL_SECONDS)
+            print(f"\nNext run in {run_interval_seconds} seconds...")
+            time.sleep(run_interval_seconds)
 
     except KeyboardInterrupt:
         print("\nScheduler stopped by user.")
 
 
 if __name__ == "__main__":
-    start_scheduler()
+    run_interval = get_run_interval()
+    start_scheduler(run_interval)
