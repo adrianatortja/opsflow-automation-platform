@@ -3,3 +3,5 @@ __pycache__/
 .env
 venv/
 .venv/
+# Generated daily reports
+reports/daily_ops_report_*.csv
