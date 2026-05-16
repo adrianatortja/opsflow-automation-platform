@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from opsflow.pipeline import get_opsflow_dashboard_data
+from opsflow.database import create_tables, get_pipeline_history
 
 
 st.set_page_config(
@@ -9,6 +10,33 @@ st.set_page_config(
     page_icon="📊",
     layout="wide",
 )
+
+
+def load_pipeline_history():
+    """
+    Load saved pipeline history from SQLite and return it as a Pandas DataFrame.
+    """
+    create_tables()
+
+    rows = get_pipeline_history()
+
+    columns = [
+        "id",
+        "run_date",
+        "total_revenue",
+        "total_ad_spend",
+        "roas",
+        "failed_order_rate",
+        "pending_fulfillment",
+        "meta_roas",
+        "conversion_rate",
+        "supplier_delay_rate",
+        "total_alerts",
+        "run_datetime",
+    ]
+
+    return pd.DataFrame(rows, columns=columns)
+
 
 data = get_opsflow_dashboard_data()
 
@@ -21,12 +49,14 @@ meta_ads_alerts = data["meta_ads_alerts"]
 supplier_alerts = data["supplier_alerts"]
 total_alerts = data["total_alerts"]
 
+
 st.title("OpsFlow Automation Dashboard")
 
 st.write(
     "A Python dashboard for monitoring ecommerce operations, ad performance, "
-    "supplier health, and operational alerts."
+    "supplier health, operational alerts, and historical pipeline performance."
 )
+
 
 st.sidebar.title("OpsFlow Summary")
 st.sidebar.metric("Total Alerts", total_alerts)
@@ -38,6 +68,7 @@ if total_alerts > 0:
     st.sidebar.warning("Action needed today")
 else:
     st.sidebar.success("Operations look healthy")
+
 
 st.divider()
 
@@ -67,6 +98,7 @@ st.bar_chart(
     x="Metric",
     y="Value",
 )
+
 
 st.divider()
 
@@ -99,6 +131,7 @@ else:
         for alert in supplier_alerts:
             st.warning(alert)
 
+
 st.divider()
 
 st.subheader("Meta Ads Performance")
@@ -125,6 +158,7 @@ st.bar_chart(
     x="Metric",
     y="Value",
 )
+
 
 st.divider()
 
@@ -166,3 +200,61 @@ st.bar_chart(
     x="Metric",
     y="Value",
 )
+
+
+st.divider()
+
+st.subheader("Historical Pipeline Runs")
+
+history_df = load_pipeline_history()
+
+if history_df.empty:
+    st.info("No pipeline history saved yet. Run main.py to save a pipeline run.")
+else:
+    st.subheader("Historical Summary")
+
+    total_saved_runs = len(history_df)
+
+    run_times = history_df["run_datetime"].dropna()
+
+    if run_times.empty:
+        latest_run_time = "No timestamp yet"
+    else:
+        latest_run_time = run_times.iloc[-1]
+
+    average_roas = history_df["roas"].mean()
+    highest_revenue = history_df["total_revenue"].max()
+    worst_failed_order_rate = history_df["failed_order_rate"].max()
+
+    history_col1, history_col2, history_col3, history_col4, history_col5 = st.columns(5)
+
+    history_col1.metric("Saved Runs", total_saved_runs)
+    history_col2.metric("Latest Run", latest_run_time)
+    history_col3.metric("Average ROAS", f"{average_roas:.2f}")
+    history_col4.metric("Highest Revenue", f"${highest_revenue:.2f}")
+    history_col5.metric("Worst Failed Rate", f"{worst_failed_order_rate:.1%}")
+
+    display_history_df = history_df[
+        [
+            "id",
+            "run_datetime",
+            "total_revenue",
+            "roas",
+            "failed_order_rate",
+            "supplier_delay_rate",
+            "total_alerts",
+        ]
+    ]
+
+    st.dataframe(display_history_df, use_container_width=True)
+
+    chart_df = history_df.set_index("id")
+
+    st.subheader("Revenue by Pipeline Run")
+    st.line_chart(chart_df[["total_revenue"]])
+
+    st.subheader("ROAS by Pipeline Run")
+    st.line_chart(chart_df[["roas"]])
+
+    st.subheader("Total Alerts by Pipeline Run")
+    st.line_chart(chart_df[["total_alerts"]])

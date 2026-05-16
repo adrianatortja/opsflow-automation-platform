@@ -5,3 +5,4 @@ venv/
 .venv/
 # Generated daily reports
 reports/daily_ops_report_*.csv
+opsflow_history.db

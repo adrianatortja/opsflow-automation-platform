@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from opsflow.ingestion import (
     read_csv_file,
@@ -19,6 +19,7 @@ from opsflow.alerts import (
 )
 from opsflow.reporting import export_daily_report
 from opsflow.notifications import build_alert_message, send_slack_style_notification
+from opsflow.database import create_tables, save_pipeline_run
 
 
 shopify_orders = read_json_file("data/fake_shopify_orders.json")
@@ -36,6 +37,20 @@ alerts = generate_alerts(metrics)
 meta_ads_alerts = generate_meta_ads_alerts(meta_ads_metrics)
 supplier_alerts = generate_supplier_alerts(supplier_metrics)
 
+create_tables()
+
+total_alerts = len(alerts) + len(meta_ads_alerts) + len(supplier_alerts)
+
+run_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+save_pipeline_run(
+    run_date=str(date.today()),
+    run_datetime=run_datetime,
+    operations_metrics=metrics,
+    meta_ads_metrics=meta_ads_metrics,
+    supplier_metrics=supplier_metrics,
+    total_alerts=total_alerts,
+)
 
 alert_message = build_alert_message(alerts, meta_ads_alerts, supplier_alerts)
 send_slack_style_notification(alert_message)
@@ -54,6 +69,9 @@ export_daily_report(
 )
 
 print(f"Report generated: {report_file}")
+
+print("\nPipeline run saved at:")
+print(run_datetime)
 
 print("\nDaily operations metrics:")
 print(metrics)
