@@ -1,4 +1,5 @@
 # OpsFlow Automation Platform
+![Tests](https://github.com/adrianatortja/opsflow-automation-platform/actions/workflows/tests.yml/badge.svg)
 
 OpsFlow is a Python automation project for ecommerce operations, ad performance tracking, supplier monitoring, alerts, scheduled workflows, reporting, database history, automated testing, CI, and dashboard visualization.
 
