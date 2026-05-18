@@ -1,11 +1,13 @@
 # OpsFlow Automation Platform
 
-OpsFlow is a Python automation project for ecommerce operations, ad performance tracking, supplier monitoring, alerts, scheduled workflows, reporting, and dashboard visualization.
+OpsFlow is a Python automation project for ecommerce operations, ad performance tracking, supplier monitoring, alerts, scheduled workflows, reporting, database history, automated testing, CI, and dashboard visualization.
 
-It reads business data, calculates key metrics, detects operational issues, sends Slack-style alert notifications, exports daily reports, and displays results in a Streamlit dashboard.
+It reads business data, calculates key metrics, detects operational issues, sends Slack-style alert notifications, stores historical results, exports daily reports, and displays results in a Streamlit dashboard.
 
 ```text
 data source → ingestion → metrics → alerts → reports/notifications
+                                      ↓
+                                  database
                                       ↓
                                   dashboard
 ```
@@ -23,7 +25,10 @@ The project is based on common ecommerce operations tasks:
 - monitoring supplier delays
 - detecting operational issues
 - preparing daily reports
+- storing historical operations data
 - visualizing KPIs in a dashboard
+- validating business logic with automated tests
+- running tests automatically with GitHub Actions
 
 This project connects Python development with real business operations problems.
 
@@ -39,8 +44,11 @@ This project connects Python development with real business operations problems.
 - alert detection across multiple data sources
 - Slack-style notification output
 - dated CSV report export
+- SQLite database history storage
 - configurable scheduler
 - Streamlit dashboard with KPI cards, charts, and alert summaries
+- automated pytest test suite
+- GitHub Actions continuous integration
 
 ---
 
@@ -99,14 +107,23 @@ Supplier:
 
 ```text
 opsflow-automation-platform/
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 ├── data/
 ├── reports/
+├── tests/
+│   ├── test_metrics.py
+│   ├── test_alerts.py
+│   ├── test_database.py
+│   └── test_reporting.py
 ├── opsflow/
 │   ├── ingestion.py
 │   ├── metrics.py
 │   ├── alerts.py
 │   ├── reporting.py
 │   ├── notifications.py
+│   ├── database.py
 │   └── pipeline.py
 ├── dashboard.py
 ├── main.py
@@ -117,7 +134,7 @@ opsflow-automation-platform/
 
 ---
 
-## How To Run
+## Setup Instructions
 
 Clone the repository:
 
@@ -126,10 +143,17 @@ git clone https://github.com/adrianatortja/opsflow-automation-platform.git
 cd opsflow-automation-platform
 ```
 
-Create and activate a virtual environment:
+Create a virtual environment:
 
 ```bash
 python -m venv venv
+```
+
+Activate the virtual environment.
+
+On Windows PowerShell:
+
+```bash
 venv\Scripts\activate
 ```
 
@@ -138,6 +162,10 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+## How To Run
 
 Run the automation pipeline once:
 
@@ -157,11 +185,47 @@ Run the scheduler:
 python run_scheduler.py
 ```
 
-Run the scheduler with a custom interval:
+Run the scheduler with a custom interval in seconds:
 
 ```bash
 python run_scheduler.py 10
 ```
+
+---
+
+## How To Run Tests
+
+Run the automated test suite:
+
+```bash
+pytest
+```
+
+The project currently includes **21 passing automated tests** covering:
+
+- metric calculations
+- alert detection
+- database/history logic
+- report generation
+
+---
+
+## Continuous Integration
+
+This project uses **GitHub Actions** to automatically run the test suite on every push and pull request to `main`.
+
+The workflow is defined in:
+
+```text
+.github/workflows/tests.yml
+```
+
+The CI pipeline:
+
+- checks out the repository
+- sets up Python
+- installs dependencies from `requirements.txt`
+- runs the pytest test suite
 
 ---
 
@@ -202,9 +266,12 @@ Supplier:
 - business metric calculation
 - alert logic
 - report generation
+- SQLite database storage
 - scheduler logic
 - Streamlit dashboard development
 - Pandas-based chart data preparation
+- automated testing with pytest
+- GitHub Actions CI
 - modular project structure
 - Git and GitHub workflow
 
@@ -221,21 +288,24 @@ The project separates responsibilities into clear modules:
 - `alerts.py` detects business issues
 - `notifications.py` formats alert messages
 - `reporting.py` exports reports
+- `database.py` stores historical results
 - `pipeline.py` exposes reusable processed data
 - `dashboard.py` visualizes the results
 - `run_scheduler.py` runs the workflow repeatedly
+- `tests/` validates core business logic
+- `.github/workflows/tests.yml` runs tests automatically in CI
 
 ---
 
 ## Future Improvements
 
-- SQLite database storage
-- alert history tracking
-- automated tests
 - Docker setup
-- GitHub Actions
+- deployment-ready configuration
 - dashboard filters by date/source
 - historical trend charts
+- real API integrations
+- environment variable configuration
+- production logging
 
 ---
 
